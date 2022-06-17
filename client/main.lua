@@ -50,19 +50,6 @@ AddEventHandler('QBCore:Client:OnJobUpdate', function(JobInfo)
     PlayerJob = JobInfo
 end)
 
-
--- AddEventHandler('onResourceStart', function(resourceName)
---     if GetCurrentResourceName() ~= resourceName then return end
---     Wait(2000)
---     if Config.UseTarget then
---         setupTarget()
---         setupCabParkingLocation()
---     end
---     PlayerJob = QBCore.Functions.GetPlayerData().job
--- end)
-
-
-
 -- Functions
 
 local function ResetNpcTask()
@@ -471,19 +458,17 @@ end)
 
 -- NUI Callbacks
 
-RegisterNUICallback('enableMeter', function(data)
+RegisterNUICallback('enableMeter', function(data, cb)
     meterActive = data.enabled
-
-    if not meterActive then
-        resetMeter()
-    end
-
+    if not meterActive then resetMeter() end
     lastLocation = GetEntityCoords(PlayerPedId())
+    cb('ok')
 end)
 
-RegisterNUICallback('hideMouse', function()
+RegisterNUICallback('hideMouse', function(_, cb)
     SetNuiFocus(false, false)
     mouseActive = false
+    cb('ok')
 end)
 
 -- Threads
